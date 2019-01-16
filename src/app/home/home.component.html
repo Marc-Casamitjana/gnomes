@@ -1,0 +1,51 @@
+<div class="container-title">
+  <h2>Gnomes</h2>
+</div>
+<div class="gnomes-container">
+  <div class="gnomes-list">
+    <button (click)="resetGnomes()">Reset filters</button>
+    <select (change)="hairColorFilter($event.target.value)" id="colorSelect">
+      <option value=""> -- Hair color --</option>
+      <option *ngFor="let color of hairColor">{{color}}</option>
+    </select>
+    <select (change)="professionFilter($event.target.value)" id="profSelect">
+        <option (click)="resetGnomes()" value=""> -- Profession --</option>
+        <option *ngFor="let profession of professions">{{profession}}</option>
+      </select>
+      <select (change)="ageFilter($event.target.value)" id="ageSelect">
+        <option value=""> -- Select age range --</option>
+        <option value="0-100"> 0 - 100 </option>
+        <option value="100-200"> 100 - 200 </option>
+        <option value="200-300"> 200 - 300 </option>
+        <option value="300-500"> 300 or more </option>
+      </select>
+      <div>
+        <input id="searchGnomes" type="text" [(ngModel)]="searchValue" (keyup.enter)="searchGnomes(searchValue)">
+      </div>
+    <ul>
+    <div>
+      <li *ngFor="let gnome of gnomeList">
+          <div class="gnome-link" (click)="getGnome(gnome.id)" >
+            <span class="id-gnome">{{gnome.id}}</span>
+            <div class="item-gnome">{{gnome.name}} ---- Age: {{gnome.age}}</div>
+          </div>
+      </li>
+      <button (click)="onScroll()">Load more</button>
+    </div>
+    </ul>
+  </div>
+  <div *ngIf="gnome" class="gnome-detail" id="gnomeDet">
+    <div class="gnome-list-detail">
+      <h3>Detail</h3>
+      <p>Hair color: {{gnome.hair_color}}</p>
+      <p>height: {{gnome.height}}</p>
+      <p>weight: {{gnome.weight}}</p>
+      <p>friends: {{gnome.friends}}</p>
+      <p>professions: {{gnome.professions}}</p>
+    </div>
+    <div class="gnome-img-detail">
+      <img src="{{gnome.thumbnail}}" alt="Gnomo">
+    </div>
+    <button (click)="closeDet()">Close detail</button>
+  </div>
+</div>

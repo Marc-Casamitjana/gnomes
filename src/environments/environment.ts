@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  API_URL: 'https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json',
   production: false
 };
 
