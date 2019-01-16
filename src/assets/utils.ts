@@ -122,14 +122,13 @@ export function isMatch(object, source) {  // comprueba si en un objeto (object)
     let ocurrences = 0;
     const keys = Object.keys(source);
     foreach(object, function (key) {
-        // if (!Array.isArray(object[key]) ?
-        //     object[key] === source[key] :
-        //     object[key].includes(source[key])) {
-        //         ocurrences++;
-        //     }
-        if (!Array.isArray(object[key]) ? true : object[key] === source[key] || object[key].includes(source[key])) { ocurrences++; }
+        if ((source[key] ? object[key] === source[key] : true)     &&
+            (source[key] ? object[key].includes(source[key]) : true) &&
+            (source[key] ? object[key] >= source[key][0] && object[key] <= source[key][1] : true)) {
+                ocurrences++;
+            }
     });
-    return ocurrences === keys.length;
+    console.log(ocurrences === keys.length);
 }
 
 const filt = {

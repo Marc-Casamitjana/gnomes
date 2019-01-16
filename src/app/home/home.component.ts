@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   sum = 20;
   gnomeList: any[];
   memoryGnomes: any[];
-  filteredGnomes: any[];
   filters = {};
   searchValue: string;
 
@@ -32,7 +31,6 @@ export class HomeComponent implements OnInit {
   }
 
   onScroll() {
-    console.log('hola');
     const start = this.sum;
     this.sum += 20;
     this.addItems(start, this.sum);
@@ -40,22 +38,26 @@ export class HomeComponent implements OnInit {
 
   addItems(startIndex, endIndex) {
     this.gnomes.slice(startIndex, endIndex).forEach(e => {
-      this.gnomeList.push(e);
-      this.memoryGnomes.push(e);
+      if (this.filters) {
+        console.log(this.gnomeList.push(e));
+        this.multipleFilter(this.filters);
+      } else {
+        this.gnomeList.push(e);
+      }
     });
+    // this.gnomeList.length < 20 ? this.addItems(endIndex, this.sum) : true ;
   }
 
   getGnomes() {
     this.gnomeService.getAPIGnomes()
       .subscribe((gnomes: any) => {
         this.gnomes = gnomes.Brastlewark;
+        this.gnomeList = this.gnomes.slice(0, this.sum);
         this.memoryGnomes = this.gnomes.slice(0, this.sum);
-        this.gnomeList = this.gnomes;
       });
   }
 
   getGnome(id) {
-    console.log(this.gnomes[id]);
     this.gnome = this.gnomes[id];
     return this.gnomes[id];
   }
@@ -99,17 +101,17 @@ export class HomeComponent implements OnInit {
   }
 
   multipleFilter(filters) {
-    this.gnomeList = this.gnomes.filter(function (gnome) {
-       return (filters.hair_color ? gnome.hair_color === filters.hair_color : true)  &&
-              (filters.professions ? gnome.professions.includes(filters.professions) : true) &&
-              (filters.age ? gnome.age >= filters.age[0] && gnome.age <= filters.age[1] : true);
-        //  && gnome.professions.includes(filters.professions);
-    //  foreach(filters, function (key) {
-    //     result = isMatch(gnome, filters);
-    //   });
-    //   return result;
+    this.gnomeList = this.gnomeList.filter(function (gnome) {
+      return (filters.hair_color ? gnome.hair_color === filters.hair_color : true) &&
+             (filters.professions ? gnome.professions.includes(filters.professions) : true) &&
+             (filters.age ? gnome.age >= filters.age[0] && gnome.age <= filters.age[1] : true);
+      //   let result;
+      //  foreach(filters, function (key) {
+      //     result = isMatch(gnome, filters);
+      //   });
+      //   return result;
     });
-    (<HTMLInputElement>document.getElementById('searchGnomes')).value ? this.searchGnomes(this.searchValue) : true ;
+    (<HTMLInputElement>document.getElementById('searchGnomes')).value ? this.searchGnomes(this.searchValue) : true;
   }
 
   searchGnomes(word) {
@@ -117,7 +119,8 @@ export class HomeComponent implements OnInit {
   }
 
   resetGnomes() {
-    this.gnomeList = this.gnomes;
+    this.gnomeList = this.memoryGnomes;
+    this.sum = 20;
     this.filters = {};
     this.searchValue = '';
     (<HTMLInputElement>document.getElementById('colorSelect')).value = '';
