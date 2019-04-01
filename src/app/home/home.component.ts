@@ -1,6 +1,8 @@
 import { removeDuplicates, foreach, isMatch } from './../../assets/utils';
 import { GnomeService } from './../gnome.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -22,7 +24,8 @@ export class HomeComponent implements OnInit {
   searchValue: string;
 
   constructor(
-    private gnomeService: GnomeService) {
+    private gnomeService: GnomeService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -53,6 +56,7 @@ export class HomeComponent implements OnInit {
         this.gnomeList = this.gnomes;
       });
   }
+
 
   getGnome(id) {
     console.log(this.gnomes[id]);
@@ -109,7 +113,7 @@ export class HomeComponent implements OnInit {
     //   });
     //   return result;
     });
-    (<HTMLInputElement>document.getElementById('searchGnomes')).value ? this.searchGnomes(this.searchValue) : true ;
+    // (<HTMLInputElement>document.getElementById('searchGnomes')).value ? this.searchGnomes(this.searchValue) : true ;
   }
 
   searchGnomes(word) {
@@ -127,6 +131,10 @@ export class HomeComponent implements OnInit {
   }
   closeDet() {
     this.gnome = undefined;
+  }
+
+  loadDetail(id) {
+    this.router.navigate(['gnome', id])
   }
 }
 

@@ -72,3 +72,8 @@ ul{
 .item-gnome{
     margin-left: 8px;
 }
+
+.imgCustom {
+    width:15%;
+    border-radius:50%;
+}

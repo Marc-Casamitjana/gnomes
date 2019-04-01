@@ -14,7 +14,10 @@ export class GnomeDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private gnomeService: GnomeService
   ) { }
+ }
+  ngOnInit() { 
+    this.gnomeService.getAPIGnomes().subscribe(gnomes => {
 
-  ngOnInit() {
+    })
   }
 }

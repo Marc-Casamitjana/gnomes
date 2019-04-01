@@ -11,6 +11,9 @@ import { GnomeService } from './gnome.service';
 import { GnomeDetailComponent } from './gnome-detail/gnome-detail.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +25,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     AppRoutingModule,
     HttpClientModule,
     InfiniteScrollModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [GnomeService],
   bootstrap: [AppComponent]
